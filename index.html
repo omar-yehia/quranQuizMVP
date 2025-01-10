@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <title>Responsive Rectangles on Image</title>
+    <style>
+        #canvas {
+            position: relative;
+            display: inline-block;
+            /* Size adjusts based on the image */
+            border: 1px solid #ccc;
+        }
+ 
+        .rectangle {
+            position: absolute;
+            border: 1px solid black;
+            background-color: rgba(255, 255, 255, 1);
+        }
+    </style>
+</head>
+<!-- 'https://app.quranflash.com/book/MedinaOld/epub/EPUB/imgs/{:04d}.png' -->
+<body>
+    <div id="canvas">
+        <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:999" hidden>
+        <!-- <img id="backgroundImage" width="auto" src="3.png" alt="Background Image"> -->
+        <img id="backgroundImage" width="auto" src="https://app.quranflash.com/book/MedinaOld/epub/EPUB/imgs/0006.png" alt="Background Image">
+    </div>
+
+    <div id="modalContainer" class="container-fluid">
+
+    </div>
+
+    <script>
+        // Function to load a script dynamically
+        function loadScript(url, callback) {
+            const script = document.createElement('script');
+            script.src = url;
+            script.onload = callback; // Call the callback function once the script is loaded
+            script.onerror = () => console.error(`Failed to load script: ${url}`);
+            document.body.appendChild(script);
+        }
+    </script>
+ 
+    <script>
+        $('#modalContainer').load('modals/questionsModal.html');
+
+        loadScript('main.js', () => {
+
+            loadScript('page_3.js', () => {
+                drawRectangles(ayas);
+                rectangleClickEvent();
+
+                // backgroundImage.onload = drawRectangles;
+                // window.addEventListener('resize', drawRectangles);
+            });
+        });
+
+    </script>
+    
+
+</body>
+
+</html>
