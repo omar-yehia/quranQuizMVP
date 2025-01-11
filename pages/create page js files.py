@@ -94,7 +94,7 @@ try:
 	# Connect to the database
 	connection = mysql.connector.connect(**db_config)
 	cursor = connection.cursor()
-	for page in range(1,6):
+	for page in range(1,605):
 		createJsFile(page)
 
 except mysql.connector.Error as e:
