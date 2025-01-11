@@ -65,7 +65,8 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-body">
-                        <a href="" id="new_test_link">اختبار جديد</a> <span id="newTest"></span>
+                        <a onclick="const url = window.location.origin + window.location.pathname;window.location.href = url;"
+                         id="new_test_link">اختبار جديد</a> <span id="newTest"></span>
 
                         <p>الاخطاء</p> <span id="statsNumberOfmistakes"></span>
                         <p>اخر تدريب على الصفحة</p> <span id="statsDateOfLastTrainingOnPage">date</span>
@@ -125,7 +126,7 @@
                         var sura_id = element.data('sura_id');
                         sura_id = parseInt(sura_id);
 
-                        if (sura_id == mainSuraId) {
+                        if (sura_id == findSuraForAya(mainAyaId)) {
                             showCheckMark(element.offset().left, element.offset().top);
                             modal.animate({
                                 opacity: 0
@@ -208,6 +209,10 @@
         <script>
             $('#fourChoicesModal').on('show.bs.modal', function (event) {
                 var modal = $(this);
+                if(pageNumber ==604){
+                    $(this).modal('hide').css('opacity', 1);
+                    ayaNextPageQuestionCallBack();
+                }
                 var i = 1;
                 var arr = [];
                 Object.keys(choicesObjects).forEach(function (page) {
@@ -225,7 +230,7 @@
                     var page = element.data('page');
                     page = parseInt(page);
 
-                    if (page == pageNumber + 1) {
+                    if ( page == pageNumber + 1) {
                         showCheckMark(element.offset().left, element.offset().top);
                         modal.animate({
                             opacity: 0
@@ -259,8 +264,7 @@
         loadScript('main.js?v=0', () => {
             backgroundImage.onload = function () {
                 loadScript(pageName, () => {
-
-                    const aya_object= ayas.find(item => item.aya_id == mainAyaId);
+                    const aya_object = ayas.find(item => item.aya_id == mainAyaId);
                     if (aya_object) {
                         $('#aya').text(aya_object.aya_moshaf);
                     }
@@ -279,6 +283,15 @@
             min = Math.ceil(min); // Ensure the minimum is an integer
             max = Math.floor(max); // Ensure the maximum is an integer
             return Math.floor(Math.random() * (max - min + 1)) + min; // Inclusive of min and max
+        }
+
+        function findSuraForAya(aya_id) {
+            for (const sura of ayasRanges) {
+                if (aya_id >= sura.ayas_ids_range[0] && aya_id <= sura.ayas_ids_range[1]) {
+                    return sura.sura_id;
+                }
+            }
+            return null;
         }
 
     </script>
