@@ -34,6 +34,9 @@
 </head>
 
 <body>
+    <div class="container-fluid">
+        <h1 id="aya"></h1>
+    </div>
     <div id="recitingDiv" class="hidden">
         <button id="reciteButton" type="button" class="btn btn-primary custom-button">الآية التالية</button>
         <div id="mistakesDiv">
@@ -257,6 +260,10 @@
             backgroundImage.onload = function () {
                 loadScript(pageName, () => {
 
+                    const aya_object= ayas.find(item => item.aya_id == mainAyaId);
+                    if (aya_object) {
+                        $('#aya').text(aya_object.aya_moshaf);
+                    }
                     drawRectangles(backgroundImage, ayas);
                     rectangleClickEvent();
                     prepareSuraQuestionModal(nearbySurasNames);

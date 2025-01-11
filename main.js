@@ -81,12 +81,10 @@ function ayaNextPageQuestionCallBack(){
     startRecitingMode();
 }
 function newAyaId(){
-    var newAyayId=getRandomInt()
-    return newAyaId;
+    return getRandomInt(1,5104);
 }
 function reciteQuestionCallBack(){
-    var newAyaId=newAyaId();
-    $('#new_test_link').attr('href',"?i="+newAyaId);
+    $('#new_test_link').attr('href',"?i="+newAyaId());
     $('#finalStatsModal').modal('toggle');
 }
 
