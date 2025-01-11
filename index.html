@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
     <title>Responsive Rectangles on Image</title>
     <style>
         #canvas {
@@ -20,7 +24,7 @@
             /* Size adjusts based on the image */
             border: 1px solid #ccc;
         }
- 
+
         .rectangle {
             position: absolute;
             border: 1px solid black;
@@ -28,15 +32,211 @@
         }
     </style>
 </head>
-<!-- 'https://app.quranflash.com/book/MedinaOld/epub/EPUB/imgs/{:04d}.png' -->
+
 <body>
+    <div id="recitingDiv" class="hidden">
+        <button id="reciteButton" type="button" class="btn btn-primary custom-button">الآية التالية</button>
+        <div id="mistakesDiv">
+            <div class="counter-box custom-button">
+                الأخطاء: <span data-count="0" id="counter">0</span>
+            </div>
+            <br>
+            <button id="counterRedButton" class="btn custom-button arrow-button"
+                style="color:white;background-color:#b51a09">
+                سجل خطأ
+                <span class="glyphicon glyphicon-arrow-up" style="color:white"></span>
+            </button>
+        </div>
+
+    </div>
+
     <div id="canvas">
         <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:999" hidden>
         <!-- <img id="backgroundImage" width="auto" src="3.png" alt="Background Image"> -->
-        <img id="backgroundImage" width="auto" src="https://app.quranflash.com/book/MedinaOld/epub/EPUB/imgs/0006.png" alt="Background Image">
+        <img id="backgroundImage" width="auto" src="" alt="Background Image" z-index="0">
     </div>
 
     <div id="modalContainer" class="container-fluid">
+        <div class="modal fade" id="finalStatsModal" role="dialog">
+            <div class="modal-dialog custom-modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <a href="" id="new_test_link">اختبار جديد</a> <span id="newTest"></span>
+
+                        <p>الاخطاء</p> <span id="statsNumberOfmistakes"></span>
+                        <p>اخر تدريب على الصفحة</p> <span id="statsDateOfLastTrainingOnPage">date</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- start modal of 4 choices suras -->
+        <div class="modal fade" id="fourChoicesSuraModal" role="dialog" data-backdrop="static">
+            <div class="modal-dialog custom-modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <h1>اسم السورة؟</h1>
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_sura_1" class="btn custom-btn  btn-primary choice_sura">Option 1</div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_sura_2" class="btn custom-btn  btn-primary choice_sura">Option 2</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_sura_3" class="btn custom-btn  btn-primary choice_sura">Option 3</div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_sura_4" class="btn custom-btn  btn-primary choice_sura">Option 4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal of 4 choices sura -->
+
+        <!-- start of script for suras modal -->
+        <script>
+            function prepareSuraQuestionModal(nearbySurasNames) {
+                $('#fourChoicesSuraModal').on('show.bs.modal', function (event) {
+                    var modal = $(this);
+                    var i = 1;
+                    var arr = [];
+                    Object.keys(nearbySurasNames).forEach(function (sura_id) {
+                        arr.push([nearbySurasNames[sura_id], sura_id]);
+                    });
+                    arr.sort(() => .5 - Math.random());
+                    arr.forEach(function (element, index) {
+                        var choice = modal.find('#choice_sura_' + (index + 1));
+                        choice.text(element[0]);
+                        choice.data('sura_id', element[1])
+                    });
+                    $('.choice_sura').on('click', function () {
+                        var element = $(this);
+                        var sura_id = element.data('sura_id');
+                        sura_id = parseInt(sura_id);
+
+                        if (sura_id == mainSuraId) {
+                            showCheckMark(element.offset().left, element.offset().top);
+                            modal.animate({
+                                opacity: 0
+                            }, 500, function () {
+                                $(this).modal('hide').css('opacity', 1);
+                            });
+                            suraQuestionCallBack();
+                        } else {
+                            element.hide(500);
+                        }
+                    });
+                });
+
+            }
+
+        </script>
+        <!-- end of script for suras modal -->
+
+        <!-- rl modal -->
+        <div class="modal fade" id="rlModal" role="dialog" data-backdrop="static">
+            <div class="modal-dialog custom-modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="button-container">
+                            <button id="rightButton" data-rl="right"
+                                class="rlButton btn custom-btn btn-default">اليمين</button>
+                            <button id="leftButton" data-rl="left"
+                                class="rlButton btn custom-btn btn-default">اليسار</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end of rl modal-->
+        <!-- script for rl modal-->
+        <script>
+            $('.rlButton').on('click', function () {
+                let selected = $(this).data('rl');
+                if (selected == 'right' && (pageNumber % 2 == 1) || selected == 'left' && (pageNumber % 2 == 0)) {
+                    $('#rlModal').modal('toggle');
+                    showCheckMark();
+                    rlQuestionCallBack();
+                } else {
+                    $(this).hide(350)
+                }
+            });
+        </script>
+        <!-- end script for rl modal-->
+
+        <!-- start modal of 4 choices -->
+        <div class="modal fade" id="fourChoicesModal" role="dialog" data-backdrop="static">
+            <div class="modal-dialog custom-modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h1>اول آية بالصفحة التالية؟</h1>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_1" class="btn custom-btn  btn-primary choice">Option 1</div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_2" class="btn custom-btn  btn-primary choice">Option 2</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_3" class="btn custom-btn  btn-primary choice">Option 3</div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div id="choice_4" class="btn custom-btn  btn-primary choice">Option 4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal of 4 choices -->
+        <!-- script for next page's first aya -->
+        <script>
+            $('#fourChoicesModal').on('show.bs.modal', function (event) {
+                var modal = $(this);
+                var i = 1;
+                var arr = [];
+                Object.keys(choicesObjects).forEach(function (page) {
+                    arr.push([choicesObjects[page], page]);
+                });
+                arr.sort(() => .5 - Math.random());
+                console.log(arr);
+                arr.forEach(function (element, index) {
+                    var choice = modal.find('#choice_' + (index + 1));
+                    choice.text(element[0]);
+                    choice.data('page', element[1])
+                });
+                $('.choice').on('click', function () {
+                    var element = $(this);
+                    var page = element.data('page');
+                    page = parseInt(page);
+
+                    if (page == pageNumber + 1) {
+                        showCheckMark(element.offset().left, element.offset().top);
+                        modal.animate({
+                            opacity: 0
+                        }, 500, function () {
+                            $(this).modal('hide').css('opacity', 1);
+                        });
+                        ayaNextPageQuestionCallBack();
+                    } else {
+                        element.hide(500);
+                    }
+                });
+            });
+        </script>
+        <!-- end script for next page's first aya -->
 
     </div>
 
@@ -50,23 +250,32 @@
             document.body.appendChild(script);
         }
     </script>
- 
+
     <script>
-        $('#modalContainer').load('modals/questionsModal.html');
 
-        loadScript('main.js', () => {
+        loadScript('main.js?v=0', () => {
+            backgroundImage.onload = function () {
+                loadScript(pageName, () => {
 
-            loadScript('page_3.js', () => {
-                drawRectangles(ayas);
-                rectangleClickEvent();
+                    drawRectangles(backgroundImage, ayas);
+                    rectangleClickEvent();
+                    prepareSuraQuestionModal(nearbySurasNames);
 
-                // backgroundImage.onload = drawRectangles;
-                // window.addEventListener('resize', drawRectangles);
-            });
+                    // backgroundImage.onload = drawRectangles;
+                    // window.addEventListener('resize', drawRectangles);
+                });
+            };
+
         });
 
+        function getRandomInt(min, max) {
+            min = Math.ceil(min); // Ensure the minimum is an integer
+            max = Math.floor(max); // Ensure the maximum is an integer
+            return Math.floor(Math.random() * (max - min + 1)) + min; // Inclusive of min and max
+        }
+
     </script>
-    
+
 
 </body>
 
