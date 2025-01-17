@@ -54,7 +54,7 @@
     </div>
 
     <div id="canvas">
-        <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:999" hidden>
+        <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:-1" hidden>
         <!-- <img id="backgroundImage" width="auto" src="3.png" alt="Background Image"> -->
         <img id="backgroundImage" width="auto" src="" alt="Background Image" z-index="0">
     </div>
@@ -65,8 +65,9 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-body">
-                        <a onclick="const url = window.location.origin + window.location.pathname;window.location.href = url;"
-                         id="new_test_link">اختبار جديد</a> <span id="newTest"></span>
+                        <!-- <a onclick="const url = window.location.origin + window.location.pathname;window.location.href = url;" -->
+                        <a onclick="window.location.reload()" id="new_test_link">اختبار جديد</a> <span
+                            id="newTest"></span>
 
                         <p>الاخطاء</p> <span id="statsNumberOfmistakes"></span>
                         <p>اخر تدريب على الصفحة</p> <span id="statsDateOfLastTrainingOnPage">date</span>
@@ -209,7 +210,7 @@
         <script>
             $('#fourChoicesModal').on('show.bs.modal', function (event) {
                 var modal = $(this);
-                if(pageNumber ==604){
+                if (pageNumber == 604) {
                     $(this).modal('hide').css('opacity', 1);
                     ayaNextPageQuestionCallBack();
                 }
@@ -230,7 +231,7 @@
                     var page = element.data('page');
                     page = parseInt(page);
 
-                    if ( page == pageNumber + 1) {
+                    if (page == pageNumber + 1) {
                         showCheckMark(element.offset().left, element.offset().top);
                         modal.animate({
                             opacity: 0
@@ -280,9 +281,7 @@
         });
 
         function getRandomInt(min, max) {
-            min = Math.ceil(min); // Ensure the minimum is an integer
-            max = Math.floor(max); // Ensure the maximum is an integer
-            return Math.floor(Math.random() * (max - min + 1)) + min; // Inclusive of min and max
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         function findSuraForAya(aya_id) {

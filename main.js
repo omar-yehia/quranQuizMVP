@@ -22,8 +22,8 @@ function drawRectangles(backgroundImage,ayas) {
     canvas.querySelectorAll('.rectangle').forEach(rect => rect.remove());
 
     let scl = 1.62;
-    const scaleX = scl * imageWidth / naturalWidth;
-    const scaleY = scl * imageHeight / naturalHeight;
+    // const scaleX = scl * imageWidth / naturalWidth;
+    // const scaleY = scl * imageHeight / naturalHeight;
 
     ayas.forEach(function (ayaElement) {
         ayaElement.coordinates.forEach(function(arr){
@@ -35,10 +35,11 @@ function drawRectangles(backgroundImage,ayas) {
         
             // Scale positions and dimensions
             rect.style.position = 'absolute'; // Ensure it positions correctly
-            rect.style.top = top * scaleY + 'px';
-            rect.style.left = left * scaleX + 'px';
-            rect.style.width = width * scaleX + 'px';
-            rect.style.height = height * scaleY + 'px';
+            rect.style.top = top * 1.63 + 'px';
+            rect.style.left = left * scl + 'px'; //1.8 ?
+            rect.style.width = width * scl + 'px'; // 1.64
+            rect.style.height = height * 1.56 + 'px';
+        
         
             canvas.appendChild(rect);
         });
@@ -82,7 +83,7 @@ function ayaNextPageQuestionCallBack(){
     startRecitingMode();
 }
 function newAyaId(){
-    return getRandomInt(5104,6236);
+    return getRandomInt(4511,6236);
 }
 function reciteQuestionCallBack(){
     // $('#new_test_link').attr('href',"?i="+newAyaId());
