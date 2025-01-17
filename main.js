@@ -4,19 +4,20 @@ let i=new URLSearchParams(window.location.search).get('i');
 const mainAyaId = i?i: newAyaId();
 
 const pageNumber=findPage(mainAyaId,aya_page_map);
+const pagePlacement= pageNumber % 2 == 0 ?'left':'right';
 const pageName='pages/'+pageNumber+'.js?v=0';
 
 
 
 const canvas = document.getElementById('canvas');
-const backgroundImage = document.getElementById('backgroundImage');
-backgroundImage.src = "https://app.quranflash.com/book/MedinaOld/epub/EPUB/imgs/"+String(pageNumber+3).padStart(4, '0')+".png";
+const quranPageImage = document.getElementById('quranPageImage');
+quranPageImage.src = "https://app.quranflash.com/book/MedinaOld/epub/EPUB/imgs/"+String(pageNumber+3).padStart(4, '0')+".png";
 
-function drawRectangles(backgroundImage,ayas) {
-    const imageWidth = backgroundImage.offsetWidth;
-    const imageHeight = backgroundImage.offsetHeight;
-    const naturalWidth = backgroundImage.naturalWidth;
-    const naturalHeight = backgroundImage.naturalHeight;
+function drawRectangles(quranPageImage,ayas) {
+    const imageWidth = quranPageImage.offsetWidth;
+    const imageHeight = quranPageImage.offsetHeight;
+    const naturalWidth = quranPageImage.naturalWidth;
+    const naturalHeight = quranPageImage.naturalHeight;
 
     // Remove existing rectangles to avoid duplication
     canvas.querySelectorAll('.rectangle').forEach(rect => rect.remove());

@@ -32,33 +32,45 @@
             border: 1px solid black;
             background-color: rgba(255, 255, 255, 1);
         }
+
+        .imageContainer {
+            width: fit-content;
+        }
+
+        #quranPageImage {
+            /* up right down left*/
+            /* clip-path: inset(9% 12% 6% 3%); */
+            /* clip-path: inset(9% 3% 6% 12%); */
+            display: block;
+            position: absolute;
+        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
         <h1 id="aya"></h1>
-    </div>
-    <div id="recitingDiv" class="hidden">
-        <button id="reciteButton" type="button" class="btn btn-primary custom-button">الآية التالية</button>
-        <div id="mistakesDiv">
-            <div class="counter-box custom-button">
-                الأخطاء: <span data-count="0" id="counter">0</span>
+        <div id="recitingDiv" class="hidden">
+            <button id="reciteButton" type="button" class="btn btn-primary custom-button">الآية التالية</button>
+            <div id="mistakesDiv">
+                <div class="counter-box custom-button">
+                    الأخطاء: <span data-count="0" id="counter">0</span>
+                </div>
+                <br>
+                <button id="counterRedButton" class="btn custom-button arrow-button"
+                    style="color:white;background-color:#b51a09">
+                    سجل خطأ
+                    <span class="glyphicon glyphicon-arrow-up" style="color:white"></span>
+                </button>
             </div>
-            <br>
-            <button id="counterRedButton" class="btn custom-button arrow-button"
-                style="color:white;background-color:#b51a09">
-                سجل خطأ
-                <span class="glyphicon glyphicon-arrow-up" style="color:white"></span>
-            </button>
+
         </div>
 
-    </div>
-
-    <div id="canvas">
-        <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:-1" hidden>
-        <!-- <img id="backgroundImage" width="auto" src="3.png" alt="Background Image"> -->
-        <img id="backgroundImage" width="auto" src="" alt="Background Image" z-index="0">
+        <div id="canvas" class="imageContainer">
+            <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:-1" hidden>
+            <!-- <img id="quranPageImage" width="auto" src="3.png" alt="Background Image"> -->
+            <img id="quranPageImage" width="auto" src="" alt="Background Image" z-index="0">
+        </div>
     </div>
 
     <div id="modalContainer" class="container-fluid">
@@ -169,7 +181,7 @@
         <script>
             $('.rlButton').on('click', function () {
                 let selected = $(this).data('rl');
-                if (selected == 'right' && (pageNumber % 2 == 1) || selected == 'left' && (pageNumber % 2 == 0)) {
+                if (selected == pagePlacement) {
                     $('#rlModal').modal('toggle');
                     showCheckMark();
                     rlQuestionCallBack();
@@ -265,17 +277,18 @@
     <script>
 
         loadScript('main.js?v=0', () => {
-            backgroundImage.onload = function () {
+            changeClip();
+            quranPageImage.onload = function () {
                 loadScript(pageName, () => {
                     const aya_object = ayas.find(item => item.aya_id == mainAyaId);
                     if (aya_object) {
                         $('#aya').text(aya_object.aya_moshaf);
                     }
-                    drawRectangles(backgroundImage, ayas);
+                    drawRectangles(quranPageImage, ayas);
                     rectangleClickEvent();
                     prepareSuraQuestionModal(nearbySurasNames);
 
-                    // backgroundImage.onload = drawRectangles;
+                    // quranPageImage.onload = drawRectangles;
                     // window.addEventListener('resize', drawRectangles);
                 });
             };
@@ -294,6 +307,14 @@
             }
             return null;
         }
+        function changeClip() {
+            /* up right down left*/
+            let inset_top = 9, inset_bottom = 6;
+            let inset_left = pagePlacement === 'left' ? 12:3;
+            let inset_right = pagePlacement === 'right' ? 12:3;
+            quranPageImage.style.clipPath = `inset(${inset_top}% ${inset_right}% ${inset_bottom}% ${inset_left}%)`;
+        }
+
 
     </script>
 
