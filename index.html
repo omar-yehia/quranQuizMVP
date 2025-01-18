@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- http jequery local -->
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="https://code.jquery.com/jquery-1.9.1.js"></script> 
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -18,7 +18,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-    <title>Responsive Rectangles on Image</title>
+    <title>Quran Quiz</title>
     <style>
         #canvas {
             position: relative;
@@ -45,29 +45,43 @@
             position: absolute;
         }
 
-        .btn{
-            font-size: 60px;
+        .btn {
+            font-size: 28px;
         }
     </style>
 </head>
 
 <body>
+    <div class="">
+        <label for="min_jozz_id">من الجزء </label>
+        <input id="min_jozz_id" type="number" min="1" max="30">
+        <br>
+        <label for="max_jozz_id">إلى الجزء </label>
+        <input id="max_jozz_id" type="number" min="1" max="30">
+        <br>
+        <button onclick="setJozzRange()">اختيار الاجزاء</button>
+    </div>
     <div class="container-fluid">
         <h1 id="aya"></h1>
         <div id="recitingDiv" class="hidden">
-            <button id="reciteButton" type="button" class="btn btn-primary custom-button">الآية التالية</button>
-            <div id="mistakesDiv">
-                <div class="counter-box custom-button">
-                    الأخطاء: <span data-count="0" id="counter">0</span>
+        <!-- <div id="recitingDiv" class=""> -->
+            <div class="row">
+                <div class="col-xs-4">
+                    <button id="counterRedButton" class="btn custom-button arrow-button"
+                        style="color:white;background-color:#b51a09">
+                        سجل خطأ
+                        <span class="glyphicon glyphicon-arrow-up" style="color:white"></span>
+                    </button>
                 </div>
-                <br>
-                <button id="counterRedButton" class="btn custom-button arrow-button"
-                    style="color:white;background-color:#b51a09">
-                    سجل خطأ
-                    <span class="glyphicon glyphicon-arrow-up" style="color:white"></span>
-                </button>
+                <div id="mistakesDiv" class="col-xs-4">
+                    <div class="counter-box custom-button" style="font-size:28px;">
+                        الأخطاء: <span data-count="0" id="counter">0</span>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <button id="reciteButton" type="button" class="btn btn-primary custom-button">الآية التالية</button>
+                </div>
             </div>
-
         </div>
 
         <div id="canvas" class="imageContainer">
@@ -82,9 +96,9 @@
             <div class="modal-dialog custom-modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-body">
+                    <div class="modal-body" style="font-size: 28;">
                         <!-- <a onclick="const url = window.location.origin + window.location.pathname;window.location.href = url;" -->
-                        <a onclick="window.location.reload()" id="new_test_link">اختبار جديد</a> <span
+                        <a class="btn" onclick="window.location.reload()" id="new_test_link">اختبار جديد</a> <span
                             id="newTest"></span>
 
                         <p>الاخطاء</p> <span id="statsNumberOfmistakes"></span>
@@ -171,10 +185,10 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="button-container">
-                            <button id="rightButton" data-rl="right"
-                                class="rlButton btn custom-btn btn-default">اليمين</button>
                             <button id="leftButton" data-rl="left"
                                 class="rlButton btn custom-btn btn-default">اليسار</button>
+                            <button id="rightButton" data-rl="right"
+                                class="rlButton btn custom-btn btn-default">اليمين</button>
                         </div>
                     </div>
                 </div>
@@ -267,6 +281,7 @@
 
     </div>
 
+    <!-- start of scripts -->
     <script>
         // Function to load a script dynamically
         function loadScript(url, callback) {
@@ -314,11 +329,10 @@
         function changeClip() {
             /* up right down left*/
             let inset_top = 9, inset_bottom = 6;
-            let inset_left = pagePlacement === 'left' ? 12:3;
-            let inset_right = pagePlacement === 'right' ? 12:3;
+            let inset_left = pagePlacement === 'left' ? 12 : 3;
+            let inset_right = pagePlacement === 'right' ? 12 : 3;
             quranPageImage.style.clipPath = `inset(${inset_top}% ${inset_right}% ${inset_bottom}% ${inset_left}%)`;
         }
-
 
     </script>
 
