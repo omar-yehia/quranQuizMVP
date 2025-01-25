@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- http jequery local -->
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -28,6 +30,7 @@
         }
 
         .rectangle {
+            z-index: 111;
             position: absolute;
             border: 1px solid black;
             background-color: rgba(255, 255, 255, 1);
@@ -41,8 +44,13 @@
             /* up right down left*/
             /* clip-path: inset(9% 12% 6% 3%); */
             /* clip-path: inset(9% 3% 6% 12%); */
+            top:-100px;
             display: block;
             position: absolute;
+        }
+
+        * {
+            font-size: 28px;
         }
 
         .btn {
@@ -52,19 +60,148 @@
 </head>
 
 <body>
+    <div class="container-fulid">
+        <div class="row">
+            <div class="col-md-1 col-xs-1">
+                <label for="min_jozz_id">من الجزء </label>
+                <input class="form-control" id="min_jozz_id" type="number" min="1" max="30">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 col-xs-1">
+                <label for="max_jozz_id">إلى الجزء </label>
+                <input class="form-control" id="max_jozz_id" type="number" min="1" max="30">
+            </div>
+        </div>
+
+
+        <button class="btn btn-primary" onclick="setJozzRange()">اختيار الاجزاء</button>
+    </div>
+
     <div class="">
-        <label for="min_jozz_id">من الجزء </label>
-        <input id="min_jozz_id" type="number" min="1" max="30">
-        <br>
-        <label for="max_jozz_id">إلى الجزء </label>
-        <input id="max_jozz_id" type="number" min="1" max="30">
-        <br>
-        <button onclick="setJozzRange()">اختيار الاجزاء</button>
+        <label for="suras">السورة</label>
+        <select id="suras" class="form-select" oninput="selectSura()">
+            <option value="0">اختر سورة</option>
+            <option value="1">الفاتحة</option>
+            <option value="2">البقرة</option>
+            <option value="3">آل عمران</option>
+            <option value="4">النساء</option>
+            <option value="5">المائدة</option>
+            <option value="6">الأنعام</option>
+            <option value="7">الأعراف</option>
+            <option value="8">الأنفال</option>
+            <option value="9">التوبة</option>
+            <option value="10">يونس</option>
+            <option value="11">هود</option>
+            <option value="12">يوسف</option>
+            <option value="13">الرعد</option>
+            <option value="14">إبراهيم</option>
+            <option value="15">الحجر</option>
+            <option value="16">النحل</option>
+            <option value="17">الإسراء</option>
+            <option value="18">الكهف</option>
+            <option value="19">مريم</option>
+            <option value="20">طه</option>
+            <option value="21">الأنبياء</option>
+            <option value="22">الحج</option>
+            <option value="23">المؤمنون</option>
+            <option value="24">النور</option>
+            <option value="25">الفرقان</option>
+            <option value="26">الشعراء</option>
+            <option value="27">النمل</option>
+            <option value="28">القصص</option>
+            <option value="29">العنكبوت</option>
+            <option value="30">الروم</option>
+            <option value="31">لقمان</option>
+            <option value="32">السجدة</option>
+            <option value="33">الأحزاب</option>
+            <option value="34">سبإ</option>
+            <option value="35">فاطر</option>
+            <option value="36">يس</option>
+            <option value="37">الصافات</option>
+            <option value="38">ص</option>
+            <option value="39">الزمر</option>
+            <option value="40">غافر</option>
+            <option value="41">فصلت</option>
+            <option value="42">الشوري</option>
+            <option value="43">الزخرف</option>
+            <option value="44">الدخان</option>
+            <option value="45">الجاثية</option>
+            <option value="46">الأحقاف</option>
+            <option value="47">محمد</option>
+            <option value="48">الفتح</option>
+            <option value="49">الحجرات</option>
+            <option value="50">ق</option>
+            <option value="51">الذاريات</option>
+            <option value="52">الطور</option>
+            <option value="53">النجم</option>
+            <option value="54">القمر</option>
+            <option value="55">الرحمن</option>
+            <option value="56">الواقعة</option>
+            <option value="57">الحديد</option>
+            <option value="58">المجادلة</option>
+            <option value="59">الحشر</option>
+            <option value="60">الممتحنة</option>
+            <option value="61">الصف</option>
+            <option value="62">الجمعة</option>
+            <option value="63">المنافقون</option>
+            <option value="64">التغابن</option>
+            <option value="65">الطلاق</option>
+            <option value="66">التحريم</option>
+            <option value="67">الملك</option>
+            <option value="68">القلم</option>
+            <option value="69">الحاقة</option>
+            <option value="70">المعارج</option>
+            <option value="71">نوح</option>
+            <option value="72">الجن</option>
+            <option value="73">المزمل</option>
+            <option value="74">المدثر</option>
+            <option value="75">القيامة</option>
+            <option value="76">الإنسان</option>
+            <option value="77">المرسلات</option>
+            <option value="78">النبإ</option>
+            <option value="79">النازعات</option>
+            <option value="80">عبس</option>
+            <option value="81">التكوير</option>
+            <option value="82">الانفطار</option>
+            <option value="83">المطففين</option>
+            <option value="84">الانشقاق</option>
+            <option value="85">البروج</option>
+            <option value="86">الطارق</option>
+            <option value="87">الأعلى</option>
+            <option value="88">الغاشية</option>
+            <option value="89">الفجر</option>
+            <option value="90">البلد</option>
+            <option value="91">الشمس</option>
+            <option value="92">الليل</option>
+            <option value="93">الضحى</option>
+            <option value="94">الشرح</option>
+            <option value="95">التين</option>
+            <option value="96">العلق</option>
+            <option value="97">القدر</option>
+            <option value="98">البينة</option>
+            <option value="99">الزلزلة</option>
+            <option value="100">العاديات</option>
+            <option value="101">القارعة</option>
+            <option value="102">التكاثر</option>
+            <option value="103">العصر</option>
+            <option value="104">الهمزة</option>
+            <option value="105">الفيل</option>
+            <option value="106">قريش</option>
+            <option value="107">الماعون</option>
+            <option value="108">الكوثر</option>
+            <option value="109">الكافرون</option>
+            <option value="110">النصر</option>
+            <option value="111">المسد</option>
+            <option value="112">الإخلاص</option>
+            <option value="113">الفلق</option>
+            <option value="114">الناس</option>
+        </select>
     </div>
     <div class="container-fluid">
-        <h1 id="aya"></h1>
+        <h1 id="aya" dir="rtl"></h1>
         <div id="recitingDiv" class="hidden">
-        <!-- <div id="recitingDiv" class=""> -->
+            <!-- <div id="recitingDiv" class=""> -->
             <div class="row">
                 <div class="col-xs-4">
                     <button id="counterRedButton" class="btn custom-button arrow-button"
@@ -85,7 +222,7 @@
         </div>
 
         <div id="canvas" class="imageContainer">
-            <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:-1" hidden>
+            <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:-10" hidden>
             <!-- <img id="quranPageImage" width="auto" src="3.png" alt="Background Image"> -->
             <img id="quranPageImage" width="auto" src="" alt="Background Image" z-index="0">
         </div>
@@ -291,17 +428,24 @@
             script.onerror = () => console.error(`Failed to load script: ${url}`);
             document.body.appendChild(script);
         }
+
+        function truncateWords(text,wordLimit=6) {
+            let words = text.split(' ');
+            if (words.length > wordLimit) {
+                return words.slice(0, wordLimit).join(' ') + '...';
+            }
+        }
+
     </script>
 
     <script>
-
         loadScript('main.js?v=1', () => {
             changeClip();
             quranPageImage.onload = function () {
                 loadScript(pageName, () => {
                     const aya_object = ayas.find(item => item.aya_id == mainAyaId);
                     if (aya_object) {
-                        $('#aya').text(aya_object.aya_moshaf);
+                        $('#aya').text(truncateWords(aya_object.aya_moshaf));
                     }
                     drawRectangles(quranPageImage, ayas);
                     rectangleClickEvent();
@@ -315,7 +459,11 @@
         });
 
         function getRandomInt(min, max) {
+            
+            let a=Date.now()%(max-min)+min;
+            return a;
             return Math.floor(Math.random() * (max - min + 1)) + min;
+            // return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         function findSuraForAya(aya_id) {
@@ -333,7 +481,6 @@
             let inset_right = pagePlacement === 'right' ? 12 : 3;
             quranPageImage.style.clipPath = `inset(${inset_top}% ${inset_right}% ${inset_bottom}% ${inset_left}%)`;
         }
-
     </script>
 
 
