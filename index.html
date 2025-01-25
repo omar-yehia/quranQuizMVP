@@ -44,7 +44,7 @@
             /* up right down left*/
             /* clip-path: inset(9% 12% 6% 3%); */
             /* clip-path: inset(9% 3% 6% 12%); */
-            top:-100px;
+            top: -100px;
             display: block;
             position: absolute;
         }
@@ -389,7 +389,6 @@
                     arr.push([choicesObjects[page], page]);
                 });
                 arr.sort(() => .5 - Math.random());
-                console.log(arr);
                 arr.forEach(function (element, index) {
                     var choice = modal.find('#choice_' + (index + 1));
                     choice.text(element[0]);
@@ -429,7 +428,7 @@
             document.body.appendChild(script);
         }
 
-        function truncateWords(text,wordLimit=6) {
+        function truncateWords(text, wordLimit = 6) {
             let words = text.split(' ');
             if (words.length > wordLimit) {
                 return words.slice(0, wordLimit).join(' ') + '...';
@@ -459,8 +458,8 @@
         });
 
         function getRandomInt(min, max) {
-            
-            let a=Date.now()%(max-min)+min;
+
+            let a = Date.now() % (max - min) + min;
             return a;
             return Math.floor(Math.random() * (max - min + 1)) + min;
             // return Math.floor(Math.random() * (max - min + 1)) + min;
