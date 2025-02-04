@@ -270,13 +270,19 @@ function fillSuraRange(selected_sura_id) {
     $('#suras option[value="' + selected_sura_id + '"]').prop('selected', true);
 }
 function selectSura() {
-    const selected_sura_id = $('#suras').val();
-    if (selected_sura_id) {
-        localStorage.setItem('selected_sura_id', selected_sura_id);
-        let selected_sura_aya_range = suras_aya_range[selected_sura_id - 1];
-        let minAya = selected_sura_aya_range.start_aya_id;
-        let maxAya = selected_sura_aya_range.end_aya_id;
-        setAyasRange(minAya, maxAya);
+    let selected_sura_id = $('#suras').val();
+    console.log('selected_sura_id', selected_sura_id);
+    if (selected_sura_id == 0) {
+        fillJozzRange(27, 30);
+        setJozzRange();
+        refresh();
+        return;
+
     }
+    localStorage.setItem('selected_sura_id', selected_sura_id);
+    let selected_sura_aya_range = suras_aya_range[selected_sura_id - 1];
+    let minAya = selected_sura_aya_range.start_aya_id;
+    let maxAya = selected_sura_aya_range.end_aya_id;
+    setAyasRange(minAya, maxAya);
 }
 
