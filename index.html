@@ -450,6 +450,7 @@
             quranPageImage.onload = function () {
                 loadScript(pageName, () => {
                     const aya_object = ayas.find(item => item.aya_id == mainAyaId);
+                    console.log('aya_object',aya_object);
                     if (aya_object) {
                         $('#aya').text(truncateWords(aya_object.aya_moshaf));
                     }else{
