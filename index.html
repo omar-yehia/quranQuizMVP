@@ -436,6 +436,7 @@
         }
 
         function truncateWords(text, wordLimit = 6) {
+            return text;
             let words = text.split(' ');
             if (words.length > wordLimit) {
                 return words.slice(0, wordLimit).join(' ') + '...';
