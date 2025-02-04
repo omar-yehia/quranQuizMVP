@@ -452,6 +452,8 @@
                     const aya_object = ayas.find(item => item.aya_id == mainAyaId);
                     if (aya_object) {
                         $('#aya').text(truncateWords(aya_object.aya_moshaf));
+                    }else{
+                        alert("couldn't load aya object");
                     }
                     drawRectangles(quranPageImage, ayas);
                     rectangleClickEvent();
