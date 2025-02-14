@@ -30,7 +30,7 @@
         }
 
         .rectangle {
-            z-index: 111;
+            z-index: 10;
             position: absolute;
             border: 1px solid black;
             background-color: rgba(255, 255, 255, 1);
@@ -44,9 +44,10 @@
             /* up right down left*/
             /* clip-path: inset(9% 12% 6% 3%); */
             /* clip-path: inset(9% 3% 6% 12%); */
+            /* display: block; */
             top: -100px;
-            display: block;
             position: absolute;
+            z-index: 0;
         }
 
         * {
@@ -55,6 +56,12 @@
 
         .btn {
             font-size: 28px;
+        }
+
+        .checkMark {
+            pointer-events: none;
+            width: 150px;
+            z-index: 100;
         }
     </style>
 </head>
@@ -208,8 +215,8 @@
     <div class="container-fluid">
         <h1 id="aya" dir="rtl"></h1>
         <div id="recitingDiv" class="hidden">
-            <!-- <div id="recitingDiv" class=""> -->
-            <div class="row">
+            <h1 class="bg-warning text-center py-3">تسميع الصفحة</h1>
+            <div class="row text-center">
                 <div class="col-xs-4">
                     <button id="counterRedButton" class="btn custom-button arrow-button"
                         style="color:white;background-color:#b51a09">
@@ -229,9 +236,9 @@
         </div>
 
         <div id="canvas" class="imageContainer">
-            <img id="checkMark" src="images/checkMark.png" style="width:150px;z-index:-10" hidden>
+            <img id="checkMark" src="images/checkMark.png" hidden>
             <!-- <img id="quranPageImage" width="auto" src="3.png" alt="Background Image"> -->
-            <img id="quranPageImage" width="auto" src="" alt="Background Image" z-index="0">
+            <img id="quranPageImage" src="" alt="Background Image" z-index="0">
         </div>
     </div>
 
@@ -242,8 +249,8 @@
                 <div class="modal-content">
                     <div class="modal-body" style="font-size: 28;">
                         <!-- <a onclick="const url = window.location.origin + window.location.pathname;window.location.href = url;" -->
-                        <a class="btn" onclick="window.location.reload()" id="new_test_link">اختبار جديد</a> <span
-                            id="newTest"></span>
+                        <a class="btn" onclick="window.location.reload()" id="new_test_link">اختبار جديد</a>
+                        <span id="newTest"></span>
 
                         <p>الاخطاء</p> <span id="statsNumberOfmistakes"></span>
                         <p>اخر تدريب على الصفحة</p> <span id="statsDateOfLastTrainingOnPage">date</span>
@@ -262,18 +269,18 @@
                         <div class="row">
                             <h1>اسم السورة؟</h1>
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_sura_1" class="btn custom-btn  btn-primary choice_sura">Option 1</div>
+                                <div id="choice_sura_1" class="btn custom-btn  btn-primary choice_sura"></div>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_sura_2" class="btn custom-btn  btn-primary choice_sura">Option 2</div>
+                                <div id="choice_sura_2" class="btn custom-btn  btn-primary choice_sura"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_sura_3" class="btn custom-btn  btn-primary choice_sura">Option 3</div>
+                                <div id="choice_sura_3" class="btn custom-btn  btn-primary choice_sura"></div>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_sura_4" class="btn custom-btn  btn-primary choice_sura">Option 4</div>
+                                <div id="choice_sura_4" class="btn custom-btn  btn-primary choice_sura"></div>
                             </div>
                         </div>
                     </div>
@@ -327,8 +334,9 @@
             <div class="modal-dialog custom-modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-body">
+                    <div class="modal-body text-center">
                         <div class="button-container">
+                            <p>الصفحة؟</p>
                             <button id="leftButton" data-rl="left"
                                 class="rlButton btn custom-btn btn-default">اليسار</button>
                             <button id="rightButton" data-rl="right"
@@ -363,18 +371,18 @@
                         <h1>اول آية بالصفحة التالية؟</h1>
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_1" class="btn custom-btn  btn-primary choice">Option 1</div>
+                                <div id="choice_1" class="btn custom-btn  btn-primary choice"></div>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_2" class="btn custom-btn  btn-primary choice">Option 2</div>
+                                <div id="choice_2" class="btn custom-btn  btn-primary choice"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_3" class="btn custom-btn  btn-primary choice">Option 3</div>
+                                <div id="choice_3" class="btn custom-btn  btn-primary choice"></div>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <div id="choice_4" class="btn custom-btn  btn-primary choice">Option 4</div>
+                                <div id="choice_4" class="btn custom-btn  btn-primary choice"></div>
                             </div>
                         </div>
                     </div>
@@ -436,11 +444,11 @@
         }
 
         function truncateWords(text, wordLimit = 6) {
-            return text;
             let words = text.split(' ');
             if (words.length > wordLimit) {
                 return words.slice(0, wordLimit).join(' ') + '...';
             }
+            return text;
         }
 
     </script>
@@ -451,10 +459,9 @@
             quranPageImage.onload = function () {
                 loadScript(pageName, () => {
                     const aya_object = ayas.find(item => item.aya_id == mainAyaId);
-                    console.log('aya_object',aya_object);
                     if (aya_object) {
                         $('#aya').text(truncateWords(aya_object.aya_moshaf));
-                    }else{
+                    } else {
                         alert("couldn't load aya object");
                     }
                     drawRectangles(quranPageImage, ayas);
@@ -498,7 +505,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C42P2Y0HFJ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'G-C42P2Y0HFJ');

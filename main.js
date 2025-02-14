@@ -19,9 +19,7 @@ const mainAyaId = i ? i : newAyaId(min_aya_id, max_aya_id);
 const pageNumber = findPage(mainAyaId, aya_page_map);
 const pagePlacement = pageNumber % 2 == 0 ? 'left' : 'right';
 const pageName = 'pages/' + pageNumber + '.js?v=0';
-
-
-
+ 
 const canvas = document.getElementById('canvas');
 const quranPageImage = document.getElementById('quranPageImage');
 quranPageImage.src = "https://app.quranflash.com/book/MedinaOld/epub/EPUB/imgs/" + String(pageNumber + 3).padStart(4, '0') + ".png";
