@@ -247,13 +247,15 @@
             <div class="modal-dialog custom-modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-body" style="font-size: 28;">
-                        <!-- <a onclick="const url = window.location.origin + window.location.pathname;window.location.href = url;" -->
-                        <a class="btn" onclick="window.location.reload()" id="new_test_link">اختبار جديد</a>
-                        <span id="newTest"></span>
+                    <div class="modal-body text-center" style="font-size: 28;">
+                        <p>الاخطاء
+                            <span id="statsNumberOfmistakes"></span>    
+                        </p> 
+                        <p>اخر تدريب على الصفحة
+                            <span id="statsDateOfLastTrainingOnPage"></span>
+                        </p> 
 
-                        <p>الاخطاء</p> <span id="statsNumberOfmistakes"></span>
-                        <p>اخر تدريب على الصفحة</p> <span id="statsDateOfLastTrainingOnPage">date</span>
+                        <a class="btn btn-primary btn-lg" onclick="window.location.reload()" id="new_test_link">اختبار جديد</a>
                     </div>
                 </div>
             </div>
@@ -498,6 +500,8 @@
             let inset_right = pagePlacement === 'right' ? 12 : 3;
             quranPageImage.style.clipPath = `inset(${inset_top}% ${inset_right}% ${inset_bottom}% ${inset_left}%)`;
         }
+
+        $('#statsDateOfLastTrainingOnPage').text(new Date().toLocaleDateString());
     </script>
 
 

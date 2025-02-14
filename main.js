@@ -139,6 +139,8 @@ $('#counterRedButton').on('click', function () {
     count++;
     $('#counter').data('count', count);
     $('#counter').text(count);
+    $('#statsNumberOfmistakes').text(count);
+    
 });
 // end reciting functions
 
