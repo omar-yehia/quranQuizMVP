@@ -478,11 +478,8 @@
         });
 
         function getRandomInt(min, max) {
-
-            let a = Date.now() % (max - min) + min;
-            return a;
+            // return Date.now() % (max - min) + min;
             return Math.floor(Math.random() * (max - min + 1)) + min;
-            // return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         function findSuraForAya(aya_id) {
