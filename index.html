@@ -42,9 +42,6 @@
 
         #quranPageImage {
             /* up right down left*/
-            /* clip-path: inset(9% 12% 6% 3%); */
-            /* clip-path: inset(9% 3% 6% 12%); */
-            /* display: block; */
             top: -100px;
             position: absolute;
             z-index: 0;
@@ -237,7 +234,6 @@
 
         <div id="canvas" class="imageContainer">
             <img id="checkMark" src="images/checkMark.png" hidden>
-            <!-- <img id="quranPageImage" width="auto" src="3.png" alt="Background Image"> -->
             <img id="quranPageImage" src="" alt="Background Image" z-index="0">
         </div>
     </div>
@@ -461,16 +457,10 @@
             quranPageImage.onload = function () {
                 loadScript(pageName, () => {
                     const aya_object = ayas.find(item => item.aya_id == mainAyaId);
-                    if (aya_object) {
-                        $('#aya').text(truncateWords(aya_object.aya_moshaf));
-                    } else {
-                        alert("couldn't load aya object");
-                    }
+                    $('#aya').text(truncateWords(aya_object.aya_moshaf));
                     drawRectangles(quranPageImage, ayas);
                     rectangleClickEvent();
                     prepareSuraQuestionModal(nearbySurasNames);
-
-                    // quranPageImage.onload = drawRectangles;
                     // window.addEventListener('resize', drawRectangles);
                 });
             };
